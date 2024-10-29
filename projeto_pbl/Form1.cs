@@ -1,4 +1,6 @@
-﻿namespace projeto_pbl
+﻿using System.Text.RegularExpressions;
+
+namespace projeto_pbl
 {
     public partial class Form1 : Form
     {
@@ -44,14 +46,14 @@
 
 
             // Interpreta o coeficiente para lidar com frações e assume 1 se vazio
-            double valorCoeficiente = InterpretarCoeficiente(coeficiente);
+            string valorCoeficiente = InterpretarCoeficiente(coeficiente);
 
             // Converte o expoente para superíndice, se aplicável
             string expoenteSuperindice = (expoente == "1" || string.IsNullOrEmpty(expoente)) ? "" : ConverterParaSuperindice(expoente);
 
             // Monta o termo: se o coeficiente é 1, ele não aparece visualmente
             string termo;
-            if (valorCoeficiente == 1)
+            if (valorCoeficiente == "1")
             {
                 termo = string.IsNullOrEmpty(funcao)
                     ? $"{variavel}{expoenteSuperindice}"      // Sem função, sem parênteses
@@ -74,22 +76,85 @@
             termos.Add(termo);
 
             // Atualiza o TextBox que exibe a função
-            AtualizarFuncao();
+            AtualizarFuncao(termo);
         }
 
+        //private void AtualizarFuncao()
+        //{
+        //    // Atualiza o TextBox para exibir a função completa
+        //    txtFuncaoCompleta.Text = string.Join(" ", termos);
+        //}
 
-        private void AtualizarFuncao()
+        private void AtualizarFuncao(string termo)
         {
-            // Atualiza o TextBox para exibir a função completa
-            txtFuncaoCompleta.Text = string.Join(" ", termos);
+            // Verifica se o termo contém uma fração
+            if (termo.Contains("/"))
+            {
+                // Encontra a posição da fração no termo
+                int posicaoBarra = termo.IndexOf('/');
+                int inicioFração = termo.LastIndexOf(' ', posicaoBarra) + 1;
+                int fimFração = termo.IndexOf(' ', posicaoBarra);
+
+                if (fimFração == -1) fimFração = termo.Length;
+
+                int inicioResto = EncontrarPosicaoPrimeiraLetra(termo);
+
+                // Extrai a fração
+                string fracao = termo.Substring(inicioFração, inicioResto - inicioFração);
+                string restoTermo = termo.Substring(inicioResto);
+
+                var partes = fracao.Split('/');
+
+                if (partes.Length == 2)
+                {
+                    // Adiciona a parte antes da fração
+                    richTextBoxFuncaoCompleta.AppendText(termo.Substring(0, inicioFração));
+
+                    // Adiciona o numerador
+                    richTextBoxFuncaoCompleta.SelectionCharOffset = 5; // Eleva o numerador
+                    richTextBoxFuncaoCompleta.AppendText(partes[0]);
+
+                    // Adiciona a barra de fração
+                    richTextBoxFuncaoCompleta.SelectionCharOffset = 0; // Reseta a posição
+                    richTextBoxFuncaoCompleta.AppendText("/");
+
+                    // Adiciona o denominador
+                    richTextBoxFuncaoCompleta.SelectionCharOffset = -5; // Abaixa o denominador
+                    richTextBoxFuncaoCompleta.AppendText(partes[1] + " ");
+
+                    // Reseta a posição para o próximo texto
+                    richTextBoxFuncaoCompleta.SelectionCharOffset = 0;
+
+                    // Adiciona a parte após a fração
+                    richTextBoxFuncaoCompleta.AppendText(restoTermo);
+                }
+            }
+            else
+            {
+                // Adiciona o termo normalmente
+                richTextBoxFuncaoCompleta.AppendText(termo);
+            }
+
+            // Adiciona um espaço após o termo
+            richTextBoxFuncaoCompleta.AppendText(" ");
         }
 
-        private double InterpretarCoeficiente(string coeficiente)
+        private int EncontrarPosicaoPrimeiraLetra(string input)
+        {
+            // Define a expressão regular para encontrar qualquer letra
+            Regex regex = new Regex("[a-zA-Z]");
+            Match match = regex.Match(input);
+
+            // Se encontrar uma letra, retorna a posição; caso contrário, retorna -1
+            return match.Success ? match.Index : -1;
+        }
+
+        private string InterpretarCoeficiente(string coeficiente)
         {
             // Se o coeficiente estiver vazio, retorna 1 por padrão
             if (string.IsNullOrEmpty(coeficiente))
             {
-                return 1;
+                return "1";
             }
 
             // Verifica se o coeficiente contém uma barra, indicando uma fração
@@ -103,12 +168,12 @@
                     double.TryParse(partes[1], out double denominador) &&
                     denominador != 0)  // Verifica se o denominador não é zero
                 {
-                    return numerador / denominador;  // Retorna o valor da fração
+                    return coeficiente;  // Retorna o valor da fração
                 }
                 else
                 {
                     MessageBox.Show("Fração inválida! Certifique-se de que está no formato 'numerador/denominador'.");
-                    return 1;  // Retorna 1 em caso de erro
+                    return "1";  // Retorna 1 em caso de erro
                 }
             }
             else
@@ -116,12 +181,12 @@
                 // Tenta converter o coeficiente diretamente para decimal
                 if (double.TryParse(coeficiente, out double valor))
                 {
-                    return valor;
+                    return valor.ToString();
                 }
                 else
                 {
                     MessageBox.Show("Coeficiente inválido!");
-                    return 1;  // Retorna 1 se o valor não for numérico
+                    return "1";  // Retorna 1 se o valor não for numérico
                 }
             }
         }
@@ -161,4 +226,4 @@
             }
         }
     }
-    }
+}
