@@ -40,12 +40,19 @@
             lblOperador = new Label();
             lblVariável = new Label();
             lblExpoente = new Label();
-            richTextBoxFuncaoCompleta = new RichTextBox();
+            lblIntegral = new Label();
+            txtLimiteA = new TextBox();
+            txtLimiteB = new TextBox();
+            lblNumTrapezios = new Label();
+            txtNumTrap = new TextBox();
+            btnCalcular = new Button();
+            btnLimpar = new Button();
+            lblResultado = new Label();
             SuspendLayout();
             // 
             // txtCoeficiente
             // 
-            txtCoeficiente.Location = new Point(397, 114);
+            txtCoeficiente.Location = new Point(303, 107);
             txtCoeficiente.Margin = new Padding(3, 4, 3, 4);
             txtCoeficiente.Name = "txtCoeficiente";
             txtCoeficiente.Size = new Size(49, 27);
@@ -55,7 +62,7 @@
             // lblCoeficiente
             // 
             lblCoeficiente.AutoSize = true;
-            lblCoeficiente.Location = new Point(383, 90);
+            lblCoeficiente.Location = new Point(289, 83);
             lblCoeficiente.Name = "lblCoeficiente";
             lblCoeficiente.Size = new Size(84, 20);
             lblCoeficiente.TabIndex = 1;
@@ -65,7 +72,7 @@
             // 
             comboOperador.FormattingEnabled = true;
             comboOperador.Items.AddRange(new object[] { "", "+", "-", "*", "/" });
-            comboOperador.Location = new Point(143, 114);
+            comboOperador.Location = new Point(49, 107);
             comboOperador.Margin = new Padding(3, 4, 3, 4);
             comboOperador.Name = "comboOperador";
             comboOperador.Size = new Size(49, 28);
@@ -73,7 +80,7 @@
             // 
             // txtVariavel
             // 
-            txtVariavel.Location = new Point(502, 115);
+            txtVariavel.Location = new Point(408, 108);
             txtVariavel.Margin = new Padding(3, 4, 3, 4);
             txtVariavel.Name = "txtVariavel";
             txtVariavel.Size = new Size(23, 27);
@@ -85,7 +92,7 @@
             // 
             comboFuncao.FormattingEnabled = true;
             comboFuncao.Items.AddRange(new object[] { "", "sen", "cos", "tan", "exp", "log" });
-            comboFuncao.Location = new Point(222, 114);
+            comboFuncao.Location = new Point(128, 107);
             comboFuncao.Margin = new Padding(3, 4, 3, 4);
             comboFuncao.Name = "comboFuncao";
             comboFuncao.Size = new Size(138, 28);
@@ -94,7 +101,7 @@
             // lblOpEspeciais
             // 
             lblOpEspeciais.AutoSize = true;
-            lblOpEspeciais.Location = new Point(222, 89);
+            lblOpEspeciais.Location = new Point(128, 82);
             lblOpEspeciais.Name = "lblOpEspeciais";
             lblOpEspeciais.Size = new Size(144, 20);
             lblOpEspeciais.TabIndex = 6;
@@ -103,10 +110,10 @@
             // 
             // btnAdicionaTermo
             // 
-            btnAdicionaTermo.Location = new Point(688, 89);
+            btnAdicionaTermo.Location = new Point(580, 84);
             btnAdicionaTermo.Margin = new Padding(3, 4, 3, 4);
             btnAdicionaTermo.Name = "btnAdicionaTermo";
-            btnAdicionaTermo.Size = new Size(86, 76);
+            btnAdicionaTermo.Size = new Size(176, 52);
             btnAdicionaTermo.TabIndex = 7;
             btnAdicionaTermo.Text = "Adicionar Termo";
             btnAdicionaTermo.UseVisualStyleBackColor = true;
@@ -116,15 +123,14 @@
             // 
             txtFuncaoCompleta.AutoSize = true;
             txtFuncaoCompleta.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtFuncaoCompleta.Location = new Point(186, 189);
+            txtFuncaoCompleta.Location = new Point(125, 220);
             txtFuncaoCompleta.Name = "txtFuncaoCompleta";
-            txtFuncaoCompleta.Size = new Size(121, 41);
+            txtFuncaoCompleta.Size = new Size(0, 41);
             txtFuncaoCompleta.TabIndex = 8;
-            txtFuncaoCompleta.Text = "Função:";
             // 
             // txtExpoente
             // 
-            txtExpoente.Location = new Point(586, 115);
+            txtExpoente.Location = new Point(492, 108);
             txtExpoente.Margin = new Padding(3, 4, 3, 4);
             txtExpoente.Name = "txtExpoente";
             txtExpoente.Size = new Size(47, 27);
@@ -134,7 +140,7 @@
             // lblOperador
             // 
             lblOperador.AutoSize = true;
-            lblOperador.Location = new Point(132, 91);
+            lblOperador.Location = new Point(38, 84);
             lblOperador.Name = "lblOperador";
             lblOperador.Size = new Size(73, 20);
             lblOperador.TabIndex = 10;
@@ -143,7 +149,7 @@
             // lblVariável
             // 
             lblVariável.AutoSize = true;
-            lblVariável.Location = new Point(484, 91);
+            lblVariável.Location = new Point(390, 84);
             lblVariável.Name = "lblVariável";
             lblVariável.Size = new Size(61, 20);
             lblVariável.TabIndex = 11;
@@ -152,27 +158,96 @@
             // lblExpoente
             // 
             lblExpoente.AutoSize = true;
-            lblExpoente.Location = new Point(575, 91);
+            lblExpoente.Location = new Point(481, 84);
             lblExpoente.Name = "lblExpoente";
             lblExpoente.Size = new Size(71, 20);
             lblExpoente.TabIndex = 12;
             lblExpoente.Text = "Expoente";
             lblExpoente.TextAlign = ContentAlignment.TopCenter;
             // 
-            // richTextBoxFuncaoCompleta
+            // lblIntegral
             // 
-            richTextBoxFuncaoCompleta.Location = new Point(192, 245);
-            richTextBoxFuncaoCompleta.Name = "richTextBoxFuncaoCompleta";
-            richTextBoxFuncaoCompleta.Size = new Size(376, 120);
-            richTextBoxFuncaoCompleta.TabIndex = 13;
-            richTextBoxFuncaoCompleta.Text = "";
+            lblIntegral.AutoSize = true;
+            lblIntegral.Font = new Font("Segoe UI", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblIntegral.Location = new Point(38, 190);
+            lblIntegral.Name = "lblIntegral";
+            lblIntegral.Size = new Size(67, 81);
+            lblIntegral.TabIndex = 14;
+            lblIntegral.Text = "∫";
+            // 
+            // txtLimiteA
+            // 
+            txtLimiteA.Location = new Point(87, 201);
+            txtLimiteA.Name = "txtLimiteA";
+            txtLimiteA.Size = new Size(32, 27);
+            txtLimiteA.TabIndex = 15;
+            // 
+            // txtLimiteB
+            // 
+            txtLimiteB.Location = new Point(87, 253);
+            txtLimiteB.Name = "txtLimiteB";
+            txtLimiteB.Size = new Size(32, 27);
+            txtLimiteB.TabIndex = 16;
+            // 
+            // lblNumTrapezios
+            // 
+            lblNumTrapezios.AutoSize = true;
+            lblNumTrapezios.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblNumTrapezios.Location = new Point(491, 228);
+            lblNumTrapezios.Name = "lblNumTrapezios";
+            lblNumTrapezios.Size = new Size(49, 31);
+            lblNumTrapezios.TabIndex = 17;
+            lblNumTrapezios.Text = "n =";
+            // 
+            // txtNumTrap
+            // 
+            txtNumTrap.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtNumTrap.Location = new Point(539, 225);
+            txtNumTrap.Name = "txtNumTrap";
+            txtNumTrap.Size = new Size(43, 38);
+            txtNumTrap.TabIndex = 18;
+            // 
+            // btnCalcular
+            // 
+            btnCalcular.Location = new Point(658, 228);
+            btnCalcular.Name = "btnCalcular";
+            btnCalcular.Size = new Size(94, 29);
+            btnCalcular.TabIndex = 19;
+            btnCalcular.Text = "Calcular";
+            btnCalcular.UseVisualStyleBackColor = true;
+            btnCalcular.Click += btnCalcular_Click;
+            // 
+            // btnLimpar
+            // 
+            btnLimpar.Location = new Point(779, 228);
+            btnLimpar.Name = "btnLimpar";
+            btnLimpar.Size = new Size(94, 29);
+            btnLimpar.TabIndex = 20;
+            btnLimpar.Text = "Limpar";
+            btnLimpar.UseVisualStyleBackColor = true;
+            btnLimpar.Click += btnLimpar_Click;
+            // 
+            // lblResultado
+            // 
+            lblResultado.AutoSize = true;
+            lblResultado.Location = new Point(62, 340);
+            lblResultado.Name = "lblResultado";
+            lblResultado.Size = new Size(0, 20);
+            lblResultado.TabIndex = 21;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 600);
-            Controls.Add(richTextBoxFuncaoCompleta);
+            Controls.Add(lblResultado);
+            Controls.Add(btnLimpar);
+            Controls.Add(btnCalcular);
+            Controls.Add(txtNumTrap);
+            Controls.Add(lblNumTrapezios);
+            Controls.Add(txtLimiteB);
+            Controls.Add(txtLimiteA);
+            Controls.Add(lblIntegral);
             Controls.Add(lblExpoente);
             Controls.Add(lblVariável);
             Controls.Add(lblOperador);
@@ -207,6 +282,13 @@
         private Label lblOperador;
         private Label lblVariável;
         private Label lblExpoente;
-        private RichTextBox richTextBoxFuncaoCompleta;
+        private Label lblIntegral;
+        private TextBox txtLimiteA;
+        private TextBox txtLimiteB;
+        private Label lblNumTrapezios;
+        private TextBox txtNumTrap;
+        private Button btnCalcular;
+        private Button btnLimpar;
+        private Label lblResultado;
     }
 }

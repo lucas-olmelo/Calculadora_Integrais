@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
+using NCalc;
 
 namespace projeto_pbl
 {
@@ -6,6 +8,7 @@ namespace projeto_pbl
     {
         // Lista que guarda cada termo da função
         private List<string> termos = new List<string>();
+        private List<string> termosCalculo = new List<string>();
 
         public Form1()
         {
@@ -51,6 +54,14 @@ namespace projeto_pbl
             // Converte o expoente para superíndice, se aplicável
             string expoenteSuperindice = (expoente == "1" || string.IsNullOrEmpty(expoente)) ? "" : ConverterParaSuperindice(expoente);
 
+            string expoenteCalculo = (string.IsNullOrEmpty(expoente)) ? "1" : expoente;
+
+            string funcaoCalc = (funcao == "sen") ? "Sin" : funcao;
+
+            string variavelCalc = (string.IsNullOrEmpty(variavel)) ? "1" : variavel;
+
+            string termoCalculo = operador + funcaoCalc + "(" + valorCoeficiente + " * Pow(" + variavelCalc + ", " + expoenteCalculo + "))";
+
             // Monta o termo: se o coeficiente é 1, ele não aparece visualmente
             string termo;
             if (valorCoeficiente == "1")
@@ -74,79 +85,82 @@ namespace projeto_pbl
 
             // Adiciona o termo à lista de termos
             termos.Add(termo);
+            termosCalculo.Add(termoCalculo);
 
             // Atualiza o TextBox que exibe a função
-            AtualizarFuncao(termo);
+            //AtualizarFuncao(termo);
+            AtualizarFuncao();
+
+            txtCoeficiente.Text = "";
+            comboOperador.Text = "";
+            comboFuncao.Text = "";
+            txtExpoente.Text = "";
         }
 
-        //private void AtualizarFuncao()
-        //{
-        //    // Atualiza o TextBox para exibir a função completa
-        //    txtFuncaoCompleta.Text = string.Join(" ", termos);
-        //}
-
-        private void AtualizarFuncao(string termo)
+        private void AtualizarFuncao()
         {
-            // Verifica se o termo contém uma fração
-            if (termo.Contains("/"))
-            {
-                // Encontra a posição da fração no termo
-                int posicaoBarra = termo.IndexOf('/');
-                int inicioFração = termo.LastIndexOf(' ', posicaoBarra) + 1;
-                int fimFração = termo.IndexOf(' ', posicaoBarra);
-
-                if (fimFração == -1) fimFração = termo.Length;
-
-                int inicioResto = EncontrarPosicaoPrimeiraLetra(termo);
-
-                // Extrai a fração
-                string fracao = termo.Substring(inicioFração, inicioResto - inicioFração);
-                string restoTermo = termo.Substring(inicioResto);
-
-                var partes = fracao.Split('/');
-
-                if (partes.Length == 2)
-                {
-                    // Adiciona a parte antes da fração
-                    richTextBoxFuncaoCompleta.AppendText(termo.Substring(0, inicioFração));
-
-                    // Adiciona o numerador
-                    richTextBoxFuncaoCompleta.SelectionCharOffset = 5; // Eleva o numerador
-                    richTextBoxFuncaoCompleta.AppendText(partes[0]);
-
-                    // Adiciona a barra de fração
-                    richTextBoxFuncaoCompleta.SelectionCharOffset = 0; // Reseta a posição
-                    richTextBoxFuncaoCompleta.AppendText("/");
-
-                    // Adiciona o denominador
-                    richTextBoxFuncaoCompleta.SelectionCharOffset = -5; // Abaixa o denominador
-                    richTextBoxFuncaoCompleta.AppendText(partes[1] + " ");
-
-                    // Reseta a posição para o próximo texto
-                    richTextBoxFuncaoCompleta.SelectionCharOffset = 0;
-
-                    // Adiciona a parte após a fração
-                    richTextBoxFuncaoCompleta.AppendText(restoTermo);
-                }
-            }
-            else
-            {
-                // Adiciona o termo normalmente
-                richTextBoxFuncaoCompleta.AppendText(termo);
-            }
-
-            // Adiciona um espaço após o termo
-            richTextBoxFuncaoCompleta.AppendText(" ");
+            // Atualiza o TextBox para exibir a função completa
+            txtFuncaoCompleta.Text = string.Join(" ", termos) + " * dx";
         }
 
-        private int EncontrarPosicaoPrimeiraLetra(string input)
+        private void btnCalcular_Click(object sender, EventArgs e)
         {
-            // Define a expressão regular para encontrar qualquer letra
-            Regex regex = new Regex("[a-zA-Z]");
-            Match match = regex.Match(input);
+            // Captura os valores dos limites e subintervalos
+            if (!double.TryParse(txtLimiteA.Text, out double a))
+            {
+                MessageBox.Show("Limite inferior inválido!");
+                return;
+            }
 
-            // Se encontrar uma letra, retorna a posição; caso contrário, retorna -1
-            return match.Success ? match.Index : -1;
+            if (!double.TryParse(txtLimiteB.Text, out double b))
+            {
+                MessageBox.Show("Limite superior inválido!");
+                return;
+            }
+
+            if (!int.TryParse(txtNumTrap.Text, out int n) || n <= 0)
+            {
+                MessageBox.Show("Número de subintervalos inválido!");
+                return;
+            }
+
+            // Constrói a função a partir da expressão do usuário
+            Func<double, double> func = ConstruirFuncaoUsuario();
+            
+
+            // Calcula a integral usando a regra dos trapézios
+            double resultado = RegraDosTrapeziosRepetidos(func, a, b, n);
+            lblResultado.Text = "Resultado: " + resultado.ToString();
+            //MessageBox.Show($"A integral aproximada é {resultado}");
+        }
+
+        private Func<double, double> ConstruirFuncaoUsuario()
+        {
+            // Junta os termos em uma expressão final
+            string expressaoFinal = string.Join(" ", termosCalculo);
+            MessageBox.Show(expressaoFinal);
+
+            return x =>
+            {
+                // Cria a expressão dinâmica usando NCalc
+                Expression expressao = new Expression(expressaoFinal);
+                expressao.Parameters["x"] = x; // Define x como o valor a ser substituído na expressão
+                return Convert.ToDouble(expressao.Evaluate());
+            };
+        }
+
+        public double RegraDosTrapeziosRepetidos(Func<double, double> func, double a, double b, int n)
+        {
+            double h = (b - a) / n;
+            double soma = 0.5 * (func(a) + func(b));
+
+            for (int i = 1; i < n; i++)
+            {
+                double x = a + i * h;
+                soma += func(x);
+            }
+
+            return soma * h;
         }
 
         private string InterpretarCoeficiente(string coeficiente)
@@ -224,6 +238,27 @@ namespace projeto_pbl
             {
                 MessageBox.Show("Operador obrigatório para termos subsequentes.");
             }
+        }
+
+        private void btnLimpar_Click(object sender, EventArgs e)
+        {
+            LimparCampos();
+        }
+
+        private void LimparCampos()
+        {
+            txtCoeficiente.Text = "";
+            comboOperador.Text = "";
+            comboFuncao.Text = "";
+            txtExpoente.Text = "";
+            txtFuncaoCompleta.Text = "";
+            txtLimiteA.Text = "";
+            txtLimiteB.Text = "";
+            txtNumTrap.Text = "";
+            comboOperador.Enabled = false;
+            lblResultado.Text = "";
+            termos.Clear();
+            termosCalculo.Clear();
         }
     }
 }
