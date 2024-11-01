@@ -47,24 +47,45 @@ namespace projeto_pbl
                 }
             }
 
-
             // Interpreta o coeficiente para lidar com frações e assume 1 se vazio
             string valorCoeficiente = InterpretarCoeficiente(coeficiente);
 
+            //Transforma um expoente vazio em 1
+            string expoenteCalculo = (string.IsNullOrEmpty(expoente)) ? "1" : expoente;
+
+            //Transforma a função seno em Sin para o NCalc
+            string funcaoCalc = (funcao == "sen") ? "Sin" : funcao;
+
+            //Caso não tenha variável, substitui por 1 para não alterar o cálculo
+            string variavelCalc = (string.IsNullOrEmpty(variavel)) ? "1" : variavel;
+
+            //Constroi o termo que será calculado pelo NCalc
+            string termoCalculo = operador + funcaoCalc + "(" + valorCoeficiente + " * Pow(" + variavelCalc + ", " + expoenteCalculo + "))";
+
+            //Adiciona na lista de termos
+            termosCalculo.Add(termoCalculo);
+
+            //Constrói a versão visual da integral
+            ConstroiFuncaoVisual(valorCoeficiente, operador, funcao, variavel, expoente);
+
+            //Limpa os campos após a inserção
+            LimparCampos();
+        }
+
+        private void AtualizarFuncao()
+        {
+            // Atualiza o TextBox para exibir a função completa
+            txtFuncaoCompleta.Text = string.Join(" ", termos) + " * dx";
+        }
+
+        private void ConstroiFuncaoVisual(string coeficiente, string operador, string funcao, string variavel, string expoente)
+        {
             // Converte o expoente para superíndice, se aplicável
             string expoenteSuperindice = (expoente == "1" || string.IsNullOrEmpty(expoente)) ? "" : ConverterParaSuperindice(expoente);
 
-            string expoenteCalculo = (string.IsNullOrEmpty(expoente)) ? "1" : expoente;
-
-            string funcaoCalc = (funcao == "sen") ? "Sin" : funcao;
-
-            string variavelCalc = (string.IsNullOrEmpty(variavel)) ? "1" : variavel;
-
-            string termoCalculo = operador + funcaoCalc + "(" + valorCoeficiente + " * Pow(" + variavelCalc + ", " + expoenteCalculo + "))";
-
             // Monta o termo: se o coeficiente é 1, ele não aparece visualmente
             string termo;
-            if (valorCoeficiente == "1")
+            if (coeficiente == "1")
             {
                 termo = string.IsNullOrEmpty(funcao)
                     ? $"{variavel}{expoenteSuperindice}"      // Sem função, sem parênteses
@@ -73,8 +94,8 @@ namespace projeto_pbl
             else
             {
                 termo = string.IsNullOrEmpty(funcao)
-                    ? $"{valorCoeficiente}{variavel}{expoenteSuperindice}" // Sem função
-                    : $"{valorCoeficiente}{funcao}({variavel}{expoenteSuperindice})"; // Com função
+                    ? $"{coeficiente}{variavel}{expoenteSuperindice}" // Sem função
+                    : $"{coeficiente}{funcao}({variavel}{expoenteSuperindice})"; // Com função
             }
 
             // Adiciona o operador antes do termo, se não for o primeiro
@@ -85,21 +106,9 @@ namespace projeto_pbl
 
             // Adiciona o termo à lista de termos
             termos.Add(termo);
-            termosCalculo.Add(termoCalculo);
 
             // Atualiza o label que exibe a função
             AtualizarFuncao();
-
-            txtCoeficiente.Text = "";
-            comboOperador.Text = "";
-            comboFuncao.Text = "";
-            txtExpoente.Text = "";
-        }
-
-        private void AtualizarFuncao()
-        {
-            // Atualiza o TextBox para exibir a função completa
-            txtFuncaoCompleta.Text = string.Join(" ", termos) + " * dx";
         }
 
         private void btnCalcular_Click(object sender, EventArgs e)
@@ -131,14 +140,12 @@ namespace projeto_pbl
             // Calcula a integral usando a regra dos trapézios
             double resultado = RegraDosTrapeziosRepetidos(func, a, b, n);
             lblResultado.Text = "Resultado: " + resultado.ToString();
-            //MessageBox.Show($"A integral aproximada é {resultado}");
         }
 
         private Func<double, double> ConstruirFuncaoUsuario()
         {
             // Junta os termos em uma expressão final
             string expressaoFinal = string.Join(" ", termosCalculo);
-            MessageBox.Show(expressaoFinal);
 
             return x =>
             {
@@ -242,15 +249,18 @@ namespace projeto_pbl
 
         private void btnLimpar_Click(object sender, EventArgs e)
         {
-            LimparCampos();
+            LimparTudo();
         }
 
-        private void LimparCampos()
-        {
+        private void LimparCampos() {
             txtCoeficiente.Text = "";
             comboOperador.Text = "";
             comboFuncao.Text = "";
             txtExpoente.Text = "";
+        }
+
+        private void LimparTudo()
+        {
             txtFuncaoCompleta.Text = "";
             txtLimiteB.Text = "";
             txtLimiteA.Text = "";
