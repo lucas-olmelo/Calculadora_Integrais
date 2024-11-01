@@ -87,8 +87,7 @@ namespace projeto_pbl
             termos.Add(termo);
             termosCalculo.Add(termoCalculo);
 
-            // Atualiza o TextBox que exibe a função
-            //AtualizarFuncao(termo);
+            // Atualiza o label que exibe a função
             AtualizarFuncao();
 
             txtCoeficiente.Text = "";
@@ -106,12 +105,13 @@ namespace projeto_pbl
         private void btnCalcular_Click(object sender, EventArgs e)
         {
             // Captura os valores dos limites e subintervalos
+
             if (!double.TryParse(txtLimiteA.Text, out double a))
             {
                 MessageBox.Show("Limite inferior inválido!");
                 return;
             }
-
+            
             if (!double.TryParse(txtLimiteB.Text, out double b))
             {
                 MessageBox.Show("Limite superior inválido!");
@@ -252,8 +252,8 @@ namespace projeto_pbl
             comboFuncao.Text = "";
             txtExpoente.Text = "";
             txtFuncaoCompleta.Text = "";
-            txtLimiteA.Text = "";
             txtLimiteB.Text = "";
+            txtLimiteA.Text = "";
             txtNumTrap.Text = "";
             comboOperador.Enabled = false;
             lblResultado.Text = "";
