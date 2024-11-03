@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using NCalc;
 
+
 namespace projeto_pbl
 {
     public partial class Form1 : Form
@@ -139,7 +140,7 @@ namespace projeto_pbl
 
             // Calcula a integral usando a regra dos trapézios
             double resultado = RegraDosTrapeziosRepetidos(func, a, b, n);
-            lblResultado.Text = "Resultado: " + resultado.ToString();
+            lblResultado.Text = " " + resultado.ToString();
         }
 
         private Func<double, double> ConstruirFuncaoUsuario()
@@ -275,10 +276,10 @@ namespace projeto_pbl
         private void txtExpoente_TextChanged(object sender, EventArgs e)
         {
             /*
-            precisamos mudar a forma de mostrar o resultado(tirar o "resultado" q é mostrado junto ao número)
             mudar a fonte
             programar o gráfico
             */
         }
+
     }
 }
