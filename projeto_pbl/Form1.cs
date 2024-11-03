@@ -120,7 +120,7 @@ namespace projeto_pbl
                 MessageBox.Show("Limite inferior inválido!");
                 return;
             }
-            
+
             if (!double.TryParse(txtLimiteB.Text, out double b))
             {
                 MessageBox.Show("Limite superior inválido!");
@@ -135,7 +135,7 @@ namespace projeto_pbl
 
             // Constrói a função a partir da expressão do usuário
             Func<double, double> func = ConstruirFuncaoUsuario();
-            
+
 
             // Calcula a integral usando a regra dos trapézios
             double resultado = RegraDosTrapeziosRepetidos(func, a, b, n);
@@ -252,7 +252,8 @@ namespace projeto_pbl
             LimparTudo();
         }
 
-        private void LimparCampos() {
+        private void LimparCampos()
+        {
             txtCoeficiente.Text = "";
             comboOperador.Text = "";
             comboFuncao.Text = "";
@@ -269,6 +270,15 @@ namespace projeto_pbl
             lblResultado.Text = "";
             termos.Clear();
             termosCalculo.Clear();
+        }
+
+        private void txtExpoente_TextChanged(object sender, EventArgs e)
+        {
+            /*
+            precisamos mudar a forma de mostrar o resultado(tirar o "resultado" q é mostrado junto ao número)
+            mudar a fonte
+            programar o gráfico
+            */
         }
     }
 }
