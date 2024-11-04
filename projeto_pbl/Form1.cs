@@ -14,6 +14,7 @@ namespace projeto_pbl
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -281,5 +282,37 @@ namespace projeto_pbl
             */
         }
 
+        private bool dragging = false;
+        private Point dragCursorPoint;
+        private Point dragFormPoint;
+
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+
+            dragging = true;
+            dragCursorPoint = Cursor.Position;  // Get current mouse position
+            dragFormPoint = this.Location;       // Get current window location
+
+        }
+
+        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                // Calculate the difference in position from the cursor's initial position
+                Point dif = Cursor.Position - new Size(dragCursorPoint);
+                this.Location = new Point(dragFormPoint.X + dif.X, dragFormPoint.Y + dif.Y);
+            }
+        }
+
+        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            {
+                dragging = false;
+            }
+
+        }
+
+       
     }
 }
