@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using NCalc;
-using ZedGraph;
+using OxyPlot;
+using OxyPlot.Series;
+using OxyPlot.WindowsForms;
 
 
 namespace projeto_pbl
@@ -81,6 +83,108 @@ namespace projeto_pbl
             txtFuncaoCompleta.Text = string.Join(" ", termos) + " * dx";
         }
 
+        private void btnCalcular_Click(object sender, EventArgs e)
+        {
+            // Captura os valores dos limites e subintervalos
+
+            if (!double.TryParse(txtLimiteA.Text, out double a))
+            {
+                MessageBox.Show("Limite inferior inválido!");
+                return;
+            }
+
+            if (!double.TryParse(txtLimiteB.Text, out double b))
+            {
+                MessageBox.Show("Limite superior inválido!");
+                return;
+            }
+
+            if (!int.TryParse(txtNumTrap.Text, out int n) || n <= 0)
+            {
+                MessageBox.Show("Número de subintervalos inválido!");
+                return;
+            }
+
+            // Constrói a função a partir da expressão do usuário
+            Func<double, double> func = ConstruirFuncaoUsuario();
+
+
+            // Calcula a integral usando a regra dos trapézios
+            double resultado = RegraDosTrapeziosRepetidos(func, a, b, n);
+            lblResultado.Text = " " + resultado.ToString();
+
+            // Gera o gráfico da função e dos trapezoides
+            MostrarGrafico(func, a, b, n);
+        }
+
+        public double RegraDosTrapeziosRepetidos(Func<double, double> func, double a, double b, int n)
+        {
+            double h = (b - a) / n;
+            double soma = 0.5 * (func(a) + func(b));
+
+            for (int i = 1; i < n; i++)
+            {
+                double x = a + i * h;
+                soma += func(x);
+            }
+
+            return soma * h;
+        }
+
+        private Func<double, double> ConstruirFuncaoUsuario()
+        {
+            // Junta os termos em uma expressão final
+            string expressaoFinal = string.Join(" ", termosCalculo);
+
+            return x =>
+            {
+                // Cria a expressão dinâmica usando NCalc
+                Expression expressao = new Expression(expressaoFinal);
+                expressao.Parameters["x"] = x; // Define x como o valor a ser substituído na expressão
+                return Convert.ToDouble(expressao.Evaluate());
+            };
+        }
+
+        private void MostrarGrafico(Func<double, double> func, double a, double b, int n)
+        {
+            var modelo = new PlotModel { Title = "Integral Aproximada pelo Método dos Trapezoides" };
+
+            // Série da função original baseada na expressão do usuário
+            var funcaoSerie = new LineSeries { Title = "Função", Color = OxyColors.Red };
+            for (double x = a; x <= b; x += 0.1)
+            {
+                funcaoSerie.Points.Add(new DataPoint(x, func(x)));
+            }
+            modelo.Series.Add(funcaoSerie);
+
+            // Série para os trapezoides
+            var areaSerie = new LineSeries { Title = "Área dos Trapezoides", Color = OxyColors.Blue, LineStyle = LineStyle.Solid };
+            double h = (b - a) / n;
+
+            for (int i = 0; i < n; i++)
+            {
+                double x0 = a + i * h;
+                double x1 = x0 + h;
+                double y0 = func(x0);
+                double y1 = func(x1);
+
+                // Adiciona pontos para desenhar cada trapezoide
+                areaSerie.Points.Add(new DataPoint(x0, 0));  // Ponto inicial no eixo X
+                areaSerie.Points.Add(new DataPoint(x0, y0)); // Ponto inicial na função
+                areaSerie.Points.Add(new DataPoint(x1, y1)); // Ponto final na função
+                areaSerie.Points.Add(new DataPoint(x1, 0));  // Ponto final no eixo X
+                areaSerie.Points.Add(new DataPoint(x0, 0));  // Fecha o trapezoide
+            }
+
+            modelo.Series.Add(areaSerie);
+
+            // Adiciona o valor da integral como subtítulo do gráfico
+            modelo.Subtitle = $"Aproximação da Integral = {lblResultado.Text}";
+
+            // Define o modelo no plotView e adiciona ao formulário
+            plotView1.Model = modelo;
+        }
+
         private void ConstroiFuncaoVisual(string coeficiente, string operador, string funcao, string variavel, string expoente)
         {
             // Converte o expoente para superíndice, se aplicável
@@ -114,66 +218,6 @@ namespace projeto_pbl
             AtualizarFuncao();
         }
 
-        private void btnCalcular_Click(object sender, EventArgs e)
-        {
-            // Captura os valores dos limites e subintervalos
-
-            if (!double.TryParse(txtLimiteA.Text, out double a))
-            {
-                MessageBox.Show("Limite inferior inválido!");
-                return;
-            }
-
-            if (!double.TryParse(txtLimiteB.Text, out double b))
-            {
-                MessageBox.Show("Limite superior inválido!");
-                return;
-            }
-
-            if (!int.TryParse(txtNumTrap.Text, out int n) || n <= 0)
-            {
-                MessageBox.Show("Número de subintervalos inválido!");
-                return;
-            }
-
-            // Constrói a função a partir da expressão do usuário
-            Func<double, double> func = ConstruirFuncaoUsuario();
-
-
-            // Calcula a integral usando a regra dos trapézios
-            double resultado = RegraDosTrapeziosRepetidos(func, a, b, n);
-            lblResultado.Text = " " + resultado.ToString();
-        }
-
-        private Func<double, double> ConstruirFuncaoUsuario()
-        {
-            // Junta os termos em uma expressão final
-            string expressaoFinal = string.Join(" ", termosCalculo);
-
-            return x =>
-            {
-                // Cria a expressão dinâmica usando NCalc
-                Expression expressao = new Expression(expressaoFinal);
-                expressao.Parameters["x"] = x; // Define x como o valor a ser substituído na expressão
-                return Convert.ToDouble(expressao.Evaluate());
-            };
-        }
-
-        public double RegraDosTrapeziosRepetidos(Func<double, double> func, double a, double b, int n)
-        {
-            double h = (b - a) / n;
-            double soma = 0.5 * (func(a) + func(b));
-
-            for (int i = 1; i < n; i++)
-            {
-                double x = a + i * h;
-                soma += func(x);
-            }
-
-            return soma * h;
-        }
-
-        
         private string InterpretarCoeficiente(string coeficiente)
         {
             // Se o coeficiente estiver vazio, retorna 1 por padrão
