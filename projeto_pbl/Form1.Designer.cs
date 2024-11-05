@@ -57,10 +57,12 @@
             panel3 = new Panel();
             label2 = new Label();
             panel4 = new Panel();
+            panel5 = new Panel();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel4.SuspendLayout();
+            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // txtCoeficiente
@@ -116,7 +118,7 @@
             comboFuncao.FlatStyle = FlatStyle.Flat;
             comboFuncao.ForeColor = SystemColors.ControlLightLight;
             comboFuncao.FormattingEnabled = true;
-            comboFuncao.Items.AddRange(new object[] { "", "", "Sqrt", "Sin", "Cos", "Tan", "Exp", "Log" });
+            comboFuncao.Items.AddRange(new object[] { "", "Sqrt", "Sin", "Cos", "Tan", "Exp", "Log" });
             comboFuncao.Location = new Point(86, 28);
             comboFuncao.Name = "comboFuncao";
             comboFuncao.Size = new Size(121, 23);
@@ -140,7 +142,7 @@
             btnAdicionaTermo.FlatStyle = FlatStyle.Flat;
             btnAdicionaTermo.ForeColor = SystemColors.ControlText;
             btnAdicionaTermo.ImageKey = "(nenhum)";
-            btnAdicionaTermo.Location = new Point(245, 172);
+            btnAdicionaTermo.Location = new Point(245, 45);
             btnAdicionaTermo.Name = "btnAdicionaTermo";
             btnAdicionaTermo.Size = new Size(88, 26);
             btnAdicionaTermo.TabIndex = 7;
@@ -153,7 +155,7 @@
             txtFuncaoCompleta.AutoSize = true;
             txtFuncaoCompleta.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtFuncaoCompleta.ForeColor = SystemColors.ControlLightLight;
-            txtFuncaoCompleta.Location = new Point(133, 250);
+            txtFuncaoCompleta.Location = new Point(136, 145);
             txtFuncaoCompleta.Name = "txtFuncaoCompleta";
             txtFuncaoCompleta.Size = new Size(0, 32);
             txtFuncaoCompleta.TabIndex = 8;
@@ -208,7 +210,7 @@
             lblIntegral.AutoSize = true;
             lblIntegral.Font = new Font("Segoe UI", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblIntegral.ForeColor = SystemColors.ControlLightLight;
-            lblIntegral.Location = new Point(37, 231);
+            lblIntegral.Location = new Point(40, 126);
             lblIntegral.Name = "lblIntegral";
             lblIntegral.Size = new Size(54, 65);
             lblIntegral.TabIndex = 14;
@@ -218,7 +220,7 @@
             // 
             txtLimiteB.BackColor = Color.LightSteelBlue;
             txtLimiteB.BorderStyle = BorderStyle.None;
-            txtLimiteB.Location = new Point(96, 238);
+            txtLimiteB.Location = new Point(99, 133);
             txtLimiteB.Margin = new Padding(3, 2, 3, 2);
             txtLimiteB.Name = "txtLimiteB";
             txtLimiteB.Size = new Size(27, 16);
@@ -229,7 +231,7 @@
             txtLimiteA.BackColor = Color.LightSteelBlue;
             txtLimiteA.BorderStyle = BorderStyle.None;
             txtLimiteA.ForeColor = SystemColors.ControlText;
-            txtLimiteA.Location = new Point(96, 277);
+            txtLimiteA.Location = new Point(99, 172);
             txtLimiteA.Margin = new Padding(3, 2, 3, 2);
             txtLimiteA.Name = "txtLimiteA";
             txtLimiteA.Size = new Size(27, 16);
@@ -241,7 +243,7 @@
             lblNumTrapezios.BackColor = Color.Transparent;
             lblNumTrapezios.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblNumTrapezios.ForeColor = SystemColors.ControlLightLight;
-            lblNumTrapezios.Location = new Point(457, 232);
+            lblNumTrapezios.Location = new Point(438, 133);
             lblNumTrapezios.Name = "lblNumTrapezios";
             lblNumTrapezios.Size = new Size(41, 25);
             lblNumTrapezios.TabIndex = 17;
@@ -252,7 +254,7 @@
             txtNumTrap.BackColor = Color.LightSteelBlue;
             txtNumTrap.BorderStyle = BorderStyle.None;
             txtNumTrap.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNumTrap.Location = new Point(503, 232);
+            txtNumTrap.Location = new Point(484, 133);
             txtNumTrap.Margin = new Padding(3, 2, 3, 2);
             txtNumTrap.Name = "txtNumTrap";
             txtNumTrap.Size = new Size(46, 25);
@@ -264,7 +266,7 @@
             btnCalcular.FlatAppearance.BorderSize = 0;
             btnCalcular.FlatStyle = FlatStyle.Flat;
             btnCalcular.ForeColor = SystemColors.ControlText;
-            btnCalcular.Location = new Point(239, 337);
+            btnCalcular.Location = new Point(235, 228);
             btnCalcular.Margin = new Padding(3, 2, 3, 2);
             btnCalcular.Name = "btnCalcular";
             btnCalcular.Size = new Size(116, 38);
@@ -279,7 +281,7 @@
             btnLimpar.FlatAppearance.BorderSize = 0;
             btnLimpar.FlatStyle = FlatStyle.Flat;
             btnLimpar.ForeColor = SystemColors.ControlText;
-            btnLimpar.Location = new Point(461, 274);
+            btnLimpar.Location = new Point(442, 175);
             btnLimpar.Margin = new Padding(3, 2, 3, 2);
             btnLimpar.Name = "btnLimpar";
             btnLimpar.Size = new Size(88, 21);
@@ -306,14 +308,17 @@
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(959, 25);
+            panel1.Size = new Size(959, 30);
             panel1.TabIndex = 22;
+            panel1.MouseDown += panel1_MouseDown;
+            panel1.MouseMove += panel1_MouseMove;
+            panel1.MouseUp += panel1_MouseUp;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(0, 3);
+            label1.Location = new Point(3, 4);
             label1.Name = "label1";
             label1.Size = new Size(176, 20);
             label1.TabIndex = 23;
@@ -349,10 +354,10 @@
             panel2.Controls.Add(panel6);
             panel2.Controls.Add(panel3);
             panel2.Dock = DockStyle.Right;
-            panel2.Location = new Point(599, 25);
+            panel2.Location = new Point(599, 30);
             panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(360, 425);
+            panel2.Size = new Size(360, 420);
             panel2.TabIndex = 23;
             // 
             // label3
@@ -367,7 +372,7 @@
             // panel6
             // 
             panel6.BackColor = Color.DarkSlateBlue;
-            panel6.Location = new Point(15, 148);
+            panel6.Location = new Point(15, 143);
             panel6.Margin = new Padding(3, 2, 3, 2);
             panel6.Name = "panel6";
             panel6.Size = new Size(326, 268);
@@ -398,6 +403,7 @@
             // 
             // panel4
             // 
+            panel4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel4.BackColor = Color.Transparent;
             panel4.Controls.Add(comboFuncao);
             panel4.Controls.Add(lblOpEspeciais);
@@ -415,24 +421,36 @@
             panel4.Size = new Size(467, 58);
             panel4.TabIndex = 23;
             // 
+            // panel5
+            // 
+            panel5.Anchor = AnchorStyles.None;
+            panel5.BackColor = Color.DarkSlateBlue;
+            panel5.Controls.Add(btnLimpar);
+            panel5.Controls.Add(txtFuncaoCompleta);
+            panel5.Controls.Add(lblNumTrapezios);
+            panel5.Controls.Add(txtNumTrap);
+            panel5.Controls.Add(btnCalcular);
+            panel5.Controls.Add(lblIntegral);
+            panel5.Controls.Add(btnAdicionaTermo);
+            panel5.Controls.Add(txtLimiteA);
+            panel5.Controls.Add(txtLimiteB);
+            panel5.Location = new Point(3, 141);
+            panel5.Margin = new Padding(3, 2, 3, 2);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(593, 268);
+            panel5.TabIndex = 24;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             BackColor = Color.DarkSlateBlue;
             ClientSize = new Size(959, 450);
-            Controls.Add(btnLimpar);
+            Controls.Add(panel5);
             Controls.Add(panel4);
-            Controls.Add(txtFuncaoCompleta);
             Controls.Add(panel2);
-            Controls.Add(lblIntegral);
             Controls.Add(panel1);
-            Controls.Add(txtLimiteB);
-            Controls.Add(btnCalcular);
-            Controls.Add(txtLimiteA);
-            Controls.Add(txtNumTrap);
-            Controls.Add(btnAdicionaTermo);
-            Controls.Add(lblNumTrapezios);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Form1";
             Text = "Form1";
@@ -445,8 +463,9 @@
             panel3.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -480,5 +499,6 @@
         private Label label2;
         private Label label3;
         private Panel panel6;
+        private Panel panel5;
     }
 }
