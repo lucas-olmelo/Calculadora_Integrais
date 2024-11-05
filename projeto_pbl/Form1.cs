@@ -111,7 +111,7 @@ namespace projeto_pbl
 
             // Calcula a integral usando a regra dos trapézios
             double resultado = RegraDosTrapeziosRepetidos(func, a, b, n);
-            lblResultado.Text = " " + resultado.ToString();
+            //lblResultado.Text = " " + resultado.ToString();
 
             // Gera o gráfico da função e dos trapezoides
             MostrarGrafico(func, a, b, n);
@@ -147,7 +147,7 @@ namespace projeto_pbl
 
         private void MostrarGrafico(Func<double, double> func, double a, double b, int n)
         {
-            var modelo = new PlotModel { Title = "Integral Aproximada pelo Método dos Trapezoides" };
+            var modelo = new PlotModel { Title = "Integral Aproximada pelo Método dos Trapezoides", TitleFontSize = 14 };
 
             // Série da função original baseada na expressão do usuário
             var funcaoSerie = new LineSeries { Title = "Função", Color = OxyColors.Red };
@@ -179,7 +179,7 @@ namespace projeto_pbl
             modelo.Series.Add(areaSerie);
 
             // Adiciona o valor da integral como subtítulo do gráfico
-            modelo.Subtitle = $"Aproximação da Integral = {lblResultado.Text}";
+            modelo.Subtitle = $"Aproximação da Integral = {RegraDosTrapeziosRepetidos(func, a, b, n)}";
 
             // Define o modelo no plotView e adiciona ao formulário
             plotView1.Model = modelo;
@@ -315,7 +315,6 @@ namespace projeto_pbl
             txtLimiteA.Text = "";
             txtNumTrap.Text = "";
             comboOperador.Enabled = false;
-            lblResultado.Text = "";
             termos.Clear();
             termosCalculo.Clear();
         }
@@ -359,6 +358,9 @@ namespace projeto_pbl
 
         }
 
-       
+        private void btnLimpar_Click_1(object sender, EventArgs e)
+        {
+            LimparTudo();
+        }
     }
 }
