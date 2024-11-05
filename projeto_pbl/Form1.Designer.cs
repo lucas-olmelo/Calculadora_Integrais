@@ -118,7 +118,7 @@
             comboFuncao.FlatStyle = FlatStyle.Flat;
             comboFuncao.ForeColor = SystemColors.ControlLightLight;
             comboFuncao.FormattingEnabled = true;
-            comboFuncao.Items.AddRange(new object[] { "", "sen", "cos", "tan", "exp", "log" });
+            comboFuncao.Items.AddRange(new object[] { "", "Sqrt", "Sin", "Cos", "Tan", "Exp", "Log" });
             comboFuncao.Location = new Point(86, 28);
             comboFuncao.Name = "comboFuncao";
             comboFuncao.Size = new Size(121, 23);

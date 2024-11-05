@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using NCalc;
+using ZedGraph;
 
 
 namespace projeto_pbl
@@ -172,6 +173,7 @@ namespace projeto_pbl
             return soma * h;
         }
 
+        
         private string InterpretarCoeficiente(string coeficiente)
         {
             // Se o coeficiente estiver vazio, retorna 1 por padrão
