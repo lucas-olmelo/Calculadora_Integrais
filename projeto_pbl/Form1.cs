@@ -23,6 +23,8 @@ namespace projeto_pbl
         private void Form1_Load(object sender, EventArgs e)
         {
             comboOperador.Enabled = false;
+
+            CentralizarBotoesHorizontalmente();
         }
 
 
@@ -147,7 +149,7 @@ namespace projeto_pbl
 
         private void MostrarGrafico(Func<double, double> func, double a, double b, int n)
         {
-            var modelo = new PlotModel { Title = "Integral Aproximada pelo Método dos Trapezoides", TitleFontSize = 14 };
+            var modelo = new PlotModel { Title = "Integral pela Regra do Trapézio Repetido", TitleFontSize = 14 };
 
             // Série da função original baseada na expressão do usuário
             var funcaoSerie = new LineSeries { Title = "Função", Color = OxyColors.Red };
@@ -319,6 +321,25 @@ namespace projeto_pbl
             termosCalculo.Clear();
         }
 
+        // Método para centralizar o botão horizontalmente e posicioná-lo acima do fundo
+        private void CentralizarBotoesHorizontalmente()
+        {
+            int posX = (fieldsPanel.ClientSize.Width - btnAdicionaTermo.Width) / 2;
+            int posY = fieldsPanel.ClientSize.Height - btnAdicionaTermo.Height - 10;
+
+            btnAdicionaTermo.Location = new Point(posX, posY);
+
+            int posCalcX = (functionPanel.ClientSize.Width - btnCalcular.Width) / 2;
+            int posCalcY = functionPanel.ClientSize.Height - btnCalcular.Height - 50;
+
+            btnCalcular.Location = new Point(posCalcX, posCalcY);
+
+            int posLimparX = (functionPanel.ClientSize.Width - btnLimpar.Width) / 2;
+            int posLimparY = functionPanel.ClientSize.Height - btnLimpar.Height - 10;
+
+            btnLimpar.Location = new Point(posLimparX, posLimparY);
+        }
+
         private void txtExpoente_TextChanged(object sender, EventArgs e)
         {
             /*
@@ -356,11 +377,6 @@ namespace projeto_pbl
                 dragging = false;
             }
 
-        }
-
-        private void btnLimpar_Click_1(object sender, EventArgs e)
-        {
-            LimparTudo();
         }
     }
 }

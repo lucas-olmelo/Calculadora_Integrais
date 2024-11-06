@@ -15,6 +15,32 @@ namespace projeto_pbl
         public Color BorderColor { get; set; } = Color.Black;  // Define a cor da borda
         public int BorderSize { get; set; } = 2;  // Define a espessura da borda
 
+        // Propriedades para cores normais e de hover
+        public Color HoverBackColor { get; set; } = Color.SteelBlue;
+        public Color NormalBackColor { get; set; } = Color.LightSteelBlue;  // Cor padrão do fundo
+
+        public RoundedButton()
+        {
+            // Configura a cor de fundo inicial e assina os eventos de mouse
+            this.BackColor = NormalBackColor;
+            this.MouseEnter += RoundedButton_MouseEnter;
+            this.MouseLeave += RoundedButton_MouseLeave;
+        }
+
+        private void RoundedButton_MouseEnter(object sender, EventArgs e)
+        {
+            // Muda a cor de fundo para a cor de hover
+            this.BackColor = HoverBackColor;
+            this.Cursor = Cursors.Hand;  // Define o cursor para o ícone de mão
+        }
+
+        private void RoundedButton_MouseLeave(object sender, EventArgs e)
+        {
+            // Retorna a cor de fundo para a cor normal
+            this.BackColor = NormalBackColor;
+            this.Cursor = Cursors.Default;  // Define o cursor de volta para o padrão
+        }
+
         protected override void OnPaint(PaintEventArgs pevent)
         {
             base.OnPaint(pevent);

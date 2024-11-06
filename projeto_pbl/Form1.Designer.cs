@@ -28,15 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            txtCoeficiente = new TextBox();
             lblCoeficiente = new Label();
             comboOperador = new ComboBox();
-            txtVariavel = new TextBox();
             comboFuncao = new ComboBox();
             lblOpEspeciais = new Label();
-            btnAdicionaTermo = new Button();
             txtFuncaoCompleta = new Label();
-            txtExpoente = new TextBox();
             lblOperador = new Label();
             lblVariável = new Label();
             lblExpoente = new Label();
@@ -45,44 +41,35 @@
             txtLimiteA = new TextBox();
             lblNumTrapezios = new Label();
             txtNumTrap = new TextBox();
-            btnCalcular = new Button();
             panel1 = new Panel();
             label1 = new Label();
             nightControlBox1 = new ReaLTaiizor.Controls.NightControlBox();
             panel2 = new Panel();
             plotView1 = new OxyPlot.WindowsForms.PlotView();
             label3 = new Label();
-            panel4 = new Panel();
-            panel5 = new Panel();
+            fieldsPanel = new Panel();
+            btnAdicionaTermo = new RoundedButton();
+            txtVariavel = new TextBox();
+            txtExpoente = new TextBox();
+            txtCoeficiente = new TextBox();
+            functionPanel = new Panel();
+            btnCalcular = new RoundedButton();
             btnLimpar = new RoundedButton();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
-            panel4.SuspendLayout();
-            panel5.SuspendLayout();
+            fieldsPanel.SuspendLayout();
+            functionPanel.SuspendLayout();
             SuspendLayout();
-            // 
-            // txtCoeficiente
-            // 
-            txtCoeficiente.BackColor = Color.LightSteelBlue;
-            txtCoeficiente.BorderStyle = BorderStyle.FixedSingle;
-            txtCoeficiente.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCoeficiente.Location = new Point(259, 39);
-            txtCoeficiente.Margin = new Padding(3, 4, 3, 4);
-            txtCoeficiente.Name = "txtCoeficiente";
-            txtCoeficiente.PlaceholderText = "n";
-            txtCoeficiente.Size = new Size(39, 34);
-            txtCoeficiente.TabIndex = 0;
-            txtCoeficiente.TextAlign = HorizontalAlignment.Center;
             // 
             // lblCoeficiente
             // 
             lblCoeficiente.AutoSize = true;
             lblCoeficiente.BackColor = Color.Transparent;
-            lblCoeficiente.Font = new Font("Verdana", 10.2F);
+            lblCoeficiente.Font = new Font("Verdana", 9F);
             lblCoeficiente.ForeColor = SystemColors.ControlLightLight;
-            lblCoeficiente.Location = new Point(245, 15);
+            lblCoeficiente.Location = new Point(274, 17);
             lblCoeficiente.Name = "lblCoeficiente";
-            lblCoeficiente.Size = new Size(104, 20);
+            lblCoeficiente.Size = new Size(90, 18);
             lblCoeficiente.TabIndex = 1;
             lblCoeficiente.Text = "Coeficiente";
             // 
@@ -100,21 +87,6 @@
             comboOperador.Size = new Size(62, 32);
             comboOperador.TabIndex = 3;
             // 
-            // txtVariavel
-            // 
-            txtVariavel.BackColor = Color.LightSteelBlue;
-            txtVariavel.BorderStyle = BorderStyle.None;
-            txtVariavel.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtVariavel.ForeColor = SystemColors.ControlText;
-            txtVariavel.Location = new Point(361, 40);
-            txtVariavel.Margin = new Padding(3, 4, 3, 4);
-            txtVariavel.MaximumSize = new Size(30, 25);
-            txtVariavel.Name = "txtVariavel";
-            txtVariavel.Size = new Size(30, 25);
-            txtVariavel.TabIndex = 4;
-            txtVariavel.Text = "x";
-            txtVariavel.TextAlign = HorizontalAlignment.Center;
-            // 
             // comboFuncao
             // 
             comboFuncao.BackColor = Color.LightSteelBlue;
@@ -123,7 +95,7 @@
             comboFuncao.ForeColor = SystemColors.ActiveCaptionText;
             comboFuncao.FormattingEnabled = true;
             comboFuncao.Items.AddRange(new object[] { "", "Sqrt", "Sin", "Cos", "Tan", "Exp", "Log" });
-            comboFuncao.Location = new Point(98, 37);
+            comboFuncao.Location = new Point(118, 37);
             comboFuncao.Margin = new Padding(3, 4, 3, 4);
             comboFuncao.Name = "comboFuncao";
             comboFuncao.Size = new Size(138, 32);
@@ -132,66 +104,34 @@
             // lblOpEspeciais
             // 
             lblOpEspeciais.AutoSize = true;
-            lblOpEspeciais.Font = new Font("Verdana", 10.2F);
+            lblOpEspeciais.Font = new Font("Verdana", 9F);
             lblOpEspeciais.ForeColor = SystemColors.ControlLightLight;
-            lblOpEspeciais.Location = new Point(98, 13);
+            lblOpEspeciais.Location = new Point(107, 15);
             lblOpEspeciais.Name = "lblOpEspeciais";
-            lblOpEspeciais.Size = new Size(183, 20);
+            lblOpEspeciais.Size = new Size(159, 18);
             lblOpEspeciais.TabIndex = 6;
             lblOpEspeciais.Text = "Operações Especiais";
             lblOpEspeciais.TextAlign = ContentAlignment.TopCenter;
-            // 
-            // btnAdicionaTermo
-            // 
-            btnAdicionaTermo.BackColor = Color.LightSteelBlue;
-            btnAdicionaTermo.FlatAppearance.BorderSize = 0;
-            btnAdicionaTermo.FlatStyle = FlatStyle.Flat;
-            btnAdicionaTermo.Font = new Font("Lucida Sans", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAdicionaTermo.ForeColor = SystemColors.ControlText;
-            btnAdicionaTermo.ImageKey = "(nenhum)";
-            btnAdicionaTermo.Location = new Point(207, 89);
-            btnAdicionaTermo.Margin = new Padding(3, 4, 3, 4);
-            btnAdicionaTermo.Name = "btnAdicionaTermo";
-            btnAdicionaTermo.Size = new Size(131, 35);
-            btnAdicionaTermo.TabIndex = 7;
-            btnAdicionaTermo.Text = "Adicionar Termo";
-            btnAdicionaTermo.UseVisualStyleBackColor = false;
-            btnAdicionaTermo.Click += btnAdicionaTermo_Click;
             // 
             // txtFuncaoCompleta
             // 
             txtFuncaoCompleta.AutoSize = true;
             txtFuncaoCompleta.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtFuncaoCompleta.ForeColor = SystemColors.ControlLightLight;
-            txtFuncaoCompleta.Location = new Point(131, 35);
+            txtFuncaoCompleta.Location = new Point(125, 51);
             txtFuncaoCompleta.Name = "txtFuncaoCompleta";
-            txtFuncaoCompleta.Size = new Size(362, 41);
+            txtFuncaoCompleta.Size = new Size(0, 41);
             txtFuncaoCompleta.TabIndex = 8;
-            txtFuncaoCompleta.Text = "A função irá aparecer aqui";
-            // 
-            // txtExpoente
-            // 
-            txtExpoente.BackColor = Color.LightSteelBlue;
-            txtExpoente.BorderStyle = BorderStyle.FixedSingle;
-            txtExpoente.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtExpoente.Location = new Point(437, 38);
-            txtExpoente.Margin = new Padding(3, 4, 3, 4);
-            txtExpoente.Name = "txtExpoente";
-            txtExpoente.PlaceholderText = "2";
-            txtExpoente.Size = new Size(49, 32);
-            txtExpoente.TabIndex = 9;
-            txtExpoente.TextAlign = HorizontalAlignment.Center;
-            txtExpoente.TextChanged += txtExpoente_TextChanged;
             // 
             // lblOperador
             // 
             lblOperador.AutoSize = true;
             lblOperador.BackColor = Color.Transparent;
-            lblOperador.Font = new Font("Verdana", 10.2F);
+            lblOperador.Font = new Font("Verdana", 9F);
             lblOperador.ForeColor = SystemColors.ControlLightLight;
-            lblOperador.Location = new Point(17, 15);
+            lblOperador.Location = new Point(13, 15);
             lblOperador.Name = "lblOperador";
-            lblOperador.Size = new Size(88, 20);
+            lblOperador.Size = new Size(78, 18);
             lblOperador.TabIndex = 10;
             lblOperador.Text = "Operador";
             // 
@@ -199,11 +139,11 @@
             // 
             lblVariável.AutoSize = true;
             lblVariável.BackColor = Color.Transparent;
-            lblVariável.Font = new Font("Verdana", 10.2F);
+            lblVariável.Font = new Font("Verdana", 9F);
             lblVariável.ForeColor = SystemColors.ControlLightLight;
-            lblVariável.Location = new Point(346, 17);
+            lblVariável.Location = new Point(377, 17);
             lblVariável.Name = "lblVariável";
-            lblVariável.Size = new Size(77, 20);
+            lblVariável.Size = new Size(65, 18);
             lblVariável.TabIndex = 11;
             lblVariável.Text = "Variável";
             // 
@@ -211,11 +151,11 @@
             // 
             lblExpoente.AutoSize = true;
             lblExpoente.BackColor = Color.Transparent;
-            lblExpoente.Font = new Font("Verdana", 10.2F);
+            lblExpoente.Font = new Font("Verdana", 9F);
             lblExpoente.ForeColor = SystemColors.ControlLightLight;
-            lblExpoente.Location = new Point(431, 15);
+            lblExpoente.Location = new Point(451, 17);
             lblExpoente.Name = "lblExpoente";
-            lblExpoente.Size = new Size(89, 20);
+            lblExpoente.Size = new Size(78, 18);
             lblExpoente.TabIndex = 12;
             lblExpoente.Text = "Expoente";
             lblExpoente.TextAlign = ContentAlignment.TopCenter;
@@ -223,11 +163,11 @@
             // lblIntegral
             // 
             lblIntegral.AutoSize = true;
-            lblIntegral.Font = new Font("Segoe UI", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblIntegral.Font = new Font("Segoe UI", 48F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblIntegral.ForeColor = SystemColors.Control;
-            lblIntegral.Location = new Point(7, 12);
+            lblIntegral.Location = new Point(20, 7);
             lblIntegral.Name = "lblIntegral";
-            lblIntegral.Size = new Size(67, 81);
+            lblIntegral.Size = new Size(88, 106);
             lblIntegral.TabIndex = 14;
             lblIntegral.Text = "∫";
             // 
@@ -236,7 +176,7 @@
             txtLimiteB.BackColor = Color.LightSteelBlue;
             txtLimiteB.BorderStyle = BorderStyle.None;
             txtLimiteB.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtLimiteB.Location = new Point(80, 22);
+            txtLimiteB.Location = new Point(80, 26);
             txtLimiteB.Name = "txtLimiteB";
             txtLimiteB.PlaceholderText = "b";
             txtLimiteB.Size = new Size(31, 25);
@@ -249,7 +189,7 @@
             txtLimiteA.BorderStyle = BorderStyle.None;
             txtLimiteA.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtLimiteA.ForeColor = SystemColors.ControlText;
-            txtLimiteA.Location = new Point(80, 73);
+            txtLimiteA.Location = new Point(80, 88);
             txtLimiteA.Name = "txtLimiteA";
             txtLimiteA.PlaceholderText = "a";
             txtLimiteA.Size = new Size(31, 25);
@@ -262,7 +202,7 @@
             lblNumTrapezios.BackColor = Color.Transparent;
             lblNumTrapezios.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblNumTrapezios.ForeColor = SystemColors.ControlLightLight;
-            lblNumTrapezios.Location = new Point(25, 139);
+            lblNumTrapezios.Location = new Point(407, 53);
             lblNumTrapezios.Name = "lblNumTrapezios";
             lblNumTrapezios.Size = new Size(49, 31);
             lblNumTrapezios.TabIndex = 17;
@@ -273,26 +213,11 @@
             txtNumTrap.BackColor = Color.LightSteelBlue;
             txtNumTrap.BorderStyle = BorderStyle.None;
             txtNumTrap.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNumTrap.Location = new Point(80, 139);
+            txtNumTrap.Location = new Point(462, 53);
             txtNumTrap.Name = "txtNumTrap";
             txtNumTrap.Size = new Size(53, 31);
             txtNumTrap.TabIndex = 18;
             txtNumTrap.TextAlign = HorizontalAlignment.Center;
-            // 
-            // btnCalcular
-            // 
-            btnCalcular.BackColor = Color.LightSteelBlue;
-            btnCalcular.FlatAppearance.BorderSize = 0;
-            btnCalcular.FlatStyle = FlatStyle.Flat;
-            btnCalcular.Font = new Font("Verdana", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCalcular.ForeColor = SystemColors.ControlText;
-            btnCalcular.Location = new Point(204, 304);
-            btnCalcular.Name = "btnCalcular";
-            btnCalcular.Size = new Size(123, 51);
-            btnCalcular.TabIndex = 19;
-            btnCalcular.Text = "Calcular";
-            btnCalcular.UseVisualStyleBackColor = false;
-            btnCalcular.Click += btnCalcular_Click;
             // 
             // panel1
             // 
@@ -375,42 +300,111 @@
             label3.TabIndex = 24;
             label3.Text = "Gráfico da área: ";
             // 
-            // panel4
+            // fieldsPanel
             // 
-            panel4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel4.BackColor = Color.Transparent;
-            panel4.Controls.Add(comboFuncao);
-            panel4.Controls.Add(lblOpEspeciais);
-            panel4.Controls.Add(txtCoeficiente);
-            panel4.Controls.Add(txtVariavel);
-            panel4.Controls.Add(lblCoeficiente);
-            panel4.Controls.Add(lblExpoente);
-            panel4.Controls.Add(btnAdicionaTermo);
-            panel4.Controls.Add(lblVariável);
-            panel4.Controls.Add(comboOperador);
-            panel4.Controls.Add(txtExpoente);
-            panel4.Controls.Add(lblOperador);
-            panel4.Location = new Point(14, 46);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(543, 149);
-            panel4.TabIndex = 23;
+            fieldsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            fieldsPanel.BackColor = Color.Transparent;
+            fieldsPanel.Controls.Add(btnAdicionaTermo);
+            fieldsPanel.Controls.Add(txtVariavel);
+            fieldsPanel.Controls.Add(txtExpoente);
+            fieldsPanel.Controls.Add(txtCoeficiente);
+            fieldsPanel.Controls.Add(comboFuncao);
+            fieldsPanel.Controls.Add(lblOpEspeciais);
+            fieldsPanel.Controls.Add(lblCoeficiente);
+            fieldsPanel.Controls.Add(lblExpoente);
+            fieldsPanel.Controls.Add(lblVariável);
+            fieldsPanel.Controls.Add(comboOperador);
+            fieldsPanel.Controls.Add(lblOperador);
+            fieldsPanel.Location = new Point(14, 46);
+            fieldsPanel.Name = "fieldsPanel";
+            fieldsPanel.Size = new Size(543, 149);
+            fieldsPanel.TabIndex = 23;
             // 
-            // panel5
+            // btnAdicionaTermo
             // 
-            panel5.Anchor = AnchorStyles.None;
-            panel5.BackColor = Color.DarkSlateBlue;
-            panel5.Controls.Add(btnLimpar);
-            panel5.Controls.Add(txtFuncaoCompleta);
-            panel5.Controls.Add(lblNumTrapezios);
-            panel5.Controls.Add(txtNumTrap);
-            panel5.Controls.Add(btnCalcular);
-            panel5.Controls.Add(lblIntegral);
-            panel5.Controls.Add(txtLimiteA);
-            panel5.Controls.Add(txtLimiteB);
-            panel5.Location = new Point(7, 201);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(550, 414);
-            panel5.TabIndex = 24;
+            btnAdicionaTermo.BackColor = Color.LightSteelBlue;
+            btnAdicionaTermo.BorderColor = Color.Black;
+            btnAdicionaTermo.BorderRadius = 20;
+            btnAdicionaTermo.BorderSize = 2;
+            btnAdicionaTermo.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAdicionaTermo.HoverBackColor = Color.LightGray;
+            btnAdicionaTermo.Location = new Point(207, 87);
+            btnAdicionaTermo.Name = "btnAdicionaTermo";
+            btnAdicionaTermo.NormalBackColor = Color.LightSteelBlue;
+            btnAdicionaTermo.Size = new Size(124, 38);
+            btnAdicionaTermo.TabIndex = 22;
+            btnAdicionaTermo.Text = "Adicionar";
+            btnAdicionaTermo.UseVisualStyleBackColor = false;
+            btnAdicionaTermo.Click += btnAdicionaTermo_Click;
+            // 
+            // txtVariavel
+            // 
+            txtVariavel.BackColor = Color.LightSteelBlue;
+            txtVariavel.BorderStyle = BorderStyle.None;
+            txtVariavel.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtVariavel.Location = new Point(390, 41);
+            txtVariavel.Name = "txtVariavel";
+            txtVariavel.Size = new Size(31, 25);
+            txtVariavel.TabIndex = 18;
+            txtVariavel.Text = "x";
+            txtVariavel.TextAlign = HorizontalAlignment.Center;
+            // 
+            // txtExpoente
+            // 
+            txtExpoente.BackColor = Color.LightSteelBlue;
+            txtExpoente.BorderStyle = BorderStyle.None;
+            txtExpoente.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtExpoente.Location = new Point(476, 41);
+            txtExpoente.Name = "txtExpoente";
+            txtExpoente.Size = new Size(31, 25);
+            txtExpoente.TabIndex = 17;
+            txtExpoente.TextAlign = HorizontalAlignment.Center;
+            // 
+            // txtCoeficiente
+            // 
+            txtCoeficiente.BackColor = Color.LightSteelBlue;
+            txtCoeficiente.BorderStyle = BorderStyle.None;
+            txtCoeficiente.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtCoeficiente.Location = new Point(306, 41);
+            txtCoeficiente.Name = "txtCoeficiente";
+            txtCoeficiente.PlaceholderText = " ";
+            txtCoeficiente.Size = new Size(31, 25);
+            txtCoeficiente.TabIndex = 16;
+            txtCoeficiente.TextAlign = HorizontalAlignment.Center;
+            // 
+            // functionPanel
+            // 
+            functionPanel.Anchor = AnchorStyles.None;
+            functionPanel.BackColor = Color.Transparent;
+            functionPanel.Controls.Add(btnCalcular);
+            functionPanel.Controls.Add(btnLimpar);
+            functionPanel.Controls.Add(txtFuncaoCompleta);
+            functionPanel.Controls.Add(lblNumTrapezios);
+            functionPanel.Controls.Add(txtNumTrap);
+            functionPanel.Controls.Add(txtLimiteA);
+            functionPanel.Controls.Add(txtLimiteB);
+            functionPanel.Controls.Add(lblIntegral);
+            functionPanel.Location = new Point(7, 201);
+            functionPanel.Name = "functionPanel";
+            functionPanel.Size = new Size(550, 414);
+            functionPanel.TabIndex = 24;
+            // 
+            // btnCalcular
+            // 
+            btnCalcular.BackColor = Color.LightSteelBlue;
+            btnCalcular.BorderColor = Color.Black;
+            btnCalcular.BorderRadius = 20;
+            btnCalcular.BorderSize = 2;
+            btnCalcular.Font = new Font("Verdana", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCalcular.HoverBackColor = Color.LightGray;
+            btnCalcular.Location = new Point(190, 307);
+            btnCalcular.Name = "btnCalcular";
+            btnCalcular.NormalBackColor = Color.LightSteelBlue;
+            btnCalcular.Size = new Size(154, 51);
+            btnCalcular.TabIndex = 23;
+            btnCalcular.Text = "Calcular";
+            btnCalcular.UseVisualStyleBackColor = false;
+            btnCalcular.Click += btnCalcular_Click;
             // 
             // btnLimpar
             // 
@@ -419,13 +413,15 @@
             btnLimpar.BorderRadius = 10;
             btnLimpar.BorderSize = 2;
             btnLimpar.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLimpar.HoverBackColor = Color.LightGray;
             btnLimpar.Location = new Point(214, 374);
             btnLimpar.Name = "btnLimpar";
+            btnLimpar.NormalBackColor = Color.LightSteelBlue;
             btnLimpar.Size = new Size(91, 29);
             btnLimpar.TabIndex = 21;
             btnLimpar.Text = "Limpar";
             btnLimpar.UseVisualStyleBackColor = false;
-            btnLimpar.Click += btnLimpar_Click_1;
+            btnLimpar.Click += btnLimpar_Click;
             // 
             // Form1
             // 
@@ -434,8 +430,8 @@
             AutoSize = true;
             BackColor = Color.DarkSlateBlue;
             ClientSize = new Size(1105, 627);
-            Controls.Add(panel5);
-            Controls.Add(panel4);
+            Controls.Add(functionPanel);
+            Controls.Add(fieldsPanel);
             Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
@@ -447,24 +443,20 @@
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            panel4.ResumeLayout(false);
-            panel4.PerformLayout();
-            panel5.ResumeLayout(false);
-            panel5.PerformLayout();
+            fieldsPanel.ResumeLayout(false);
+            fieldsPanel.PerformLayout();
+            functionPanel.ResumeLayout(false);
+            functionPanel.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private TextBox txtCoeficiente;
         private Label lblCoeficiente;
         private ComboBox comboOperador;
-        private TextBox txtVariavel;
         private ComboBox comboFuncao;
         private Label lblOpEspeciais;
-        private Button btnAdicionaTermo;
+        private Button btnAdicionaTermo2;
         private Label txtFuncaoCompleta;
-        private TextBox txtExpoente;
         private Label lblOperador;
         private Label lblVariável;
         private Label lblExpoente;
@@ -473,15 +465,19 @@
         private TextBox txtLimiteA;
         private Label lblNumTrapezios;
         private TextBox txtNumTrap;
-        private Button btnCalcular;
         private Panel panel1;
         private ReaLTaiizor.Controls.NightControlBox nightControlBox1;
         private Label label1;
         private Panel panel2;
-        private Panel panel4;
+        private Panel fieldsPanel;
         private Label label3;
-        private Panel panel5;
+        private Panel functionPanel;
         private OxyPlot.WindowsForms.PlotView plotView1;
         private RoundedButton btnLimpar;
+        private TextBox txtVariavel;
+        private TextBox txtExpoente;
+        private TextBox txtCoeficiente;
+        private RoundedButton btnAdicionaTermo;
+        private RoundedButton btnCalcular;
     }
 }
