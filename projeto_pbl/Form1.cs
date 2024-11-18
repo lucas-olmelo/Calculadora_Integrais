@@ -330,12 +330,12 @@ namespace projeto_pbl
             btnAdicionaTermo.Location = new Point(posX, posY);
 
             int posCalcX = (functionPanel.ClientSize.Width - btnCalcular.Width) / 2;
-            int posCalcY = functionPanel.ClientSize.Height - btnCalcular.Height - 50;
+            int posCalcY = functionPanel.ClientSize.Height - btnCalcular.Height - 100;
 
             btnCalcular.Location = new Point(posCalcX, posCalcY);
 
             int posLimparX = (functionPanel.ClientSize.Width - btnLimpar.Width) / 2;
-            int posLimparY = functionPanel.ClientSize.Height - btnLimpar.Height - 10;
+            int posLimparY = functionPanel.ClientSize.Height - btnLimpar.Height - 30;
 
             btnLimpar.Location = new Point(posLimparX, posLimparY);
         }
@@ -378,6 +378,5 @@ namespace projeto_pbl
             }
 
         }
-
     }
 }
