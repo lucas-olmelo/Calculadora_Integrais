@@ -34,7 +34,7 @@
             lblOpEspeciais = new Label();
             txtFuncaoCompleta = new Label();
             lblOperador = new Label();
-            lblVariável = new Label();
+            lblVariavel = new Label();
             lblExpoente = new Label();
             lblIntegral = new Label();
             txtLimiteB = new TextBox();
@@ -93,7 +93,7 @@
             comboFuncao.Font = new Font("Tahoma", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboFuncao.ForeColor = SystemColors.ActiveCaptionText;
             comboFuncao.FormattingEnabled = true;
-            comboFuncao.Items.AddRange(new object[] { "", "Sqrt", "Sin", "Cos", "Tan", "Exp", "Log" });
+            comboFuncao.Items.AddRange(new object[] { "", "e", "Ln", "Sqrt", "Sin", "Cos", "Tan" });
             comboFuncao.Location = new Point(294, 42);
             comboFuncao.Name = "comboFuncao";
             comboFuncao.Size = new Size(142, 33);
@@ -133,17 +133,17 @@
             lblOperador.TabIndex = 10;
             lblOperador.Text = "Operador";
             // 
-            // lblVariável
+            // lblVariavel
             // 
-            lblVariável.AutoSize = true;
-            lblVariável.BackColor = Color.Transparent;
-            lblVariável.Font = new Font("Verdana", 12F);
-            lblVariável.ForeColor = SystemColors.ControlLightLight;
-            lblVariável.Location = new Point(556, 23);
-            lblVariável.Name = "lblVariável";
-            lblVariável.Size = new Size(73, 18);
-            lblVariável.TabIndex = 11;
-            lblVariável.Text = "Variável";
+            lblVariavel.AutoSize = true;
+            lblVariavel.BackColor = Color.Transparent;
+            lblVariavel.Font = new Font("Verdana", 12F);
+            lblVariavel.ForeColor = SystemColors.ControlLightLight;
+            lblVariavel.Location = new Point(556, 23);
+            lblVariavel.Name = "lblVariavel";
+            lblVariavel.Size = new Size(73, 18);
+            lblVariavel.TabIndex = 11;
+            lblVariavel.Text = "Variável";
             // 
             // lblExpoente
             // 
@@ -316,7 +316,7 @@
             fieldsPanel.Controls.Add(lblOpEspeciais);
             fieldsPanel.Controls.Add(lblCoeficiente);
             fieldsPanel.Controls.Add(lblExpoente);
-            fieldsPanel.Controls.Add(lblVariável);
+            fieldsPanel.Controls.Add(lblVariavel);
             fieldsPanel.Controls.Add(comboOperador);
             fieldsPanel.Controls.Add(lblOperador);
             fieldsPanel.Location = new Point(2, 34);
@@ -469,7 +469,7 @@
         private Button btnAdicionaTermo2;
         private Label txtFuncaoCompleta;
         private Label lblOperador;
-        private Label lblVariável;
+        private Label lblVariavel;
         private Label lblExpoente;
         private Label lblIntegral;
         private TextBox txtLimiteB;

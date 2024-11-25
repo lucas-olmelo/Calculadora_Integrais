@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using NCalc;
 using OxyPlot;
@@ -17,7 +18,6 @@ namespace projeto_pbl
         public Form1()
         {
             InitializeComponent();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -57,23 +57,44 @@ namespace projeto_pbl
             // Interpreta o coeficiente para lidar com frações e assume 1 se vazio
             string valorCoeficiente = InterpretarCoeficiente(coeficiente);
 
-            //Transforma um expoente vazio em 1
-            string expoenteCalculo = (string.IsNullOrEmpty(expoente)) ? "1" : expoente;
-
-            //Transforma a função seno em Sin para o NCalc
-            string funcaoCalc = (funcao == "sen") ? "Sin" : funcao;
-
             //Caso não tenha variável, substitui por 1 para não alterar o cálculo
             string variavelCalc = (string.IsNullOrEmpty(variavel)) ? "1" : variavel;
 
-            //Constroi o termo que será calculado pelo NCalc
-            string termoCalculo = operador + funcaoCalc + "(" + valorCoeficiente + " * Pow(" + variavelCalc + ", " + expoenteCalculo + "))";
+            //Transforma um expoente vazio em 1
+            string expoenteCalculo = (string.IsNullOrEmpty(expoente)) ? "1" : expoente;
+
+            // Formata o valor de Math.E com ponto decimal
+            string valorE = Math.E.ToString(CultureInfo.InvariantCulture);
+            
+            string termoCalculo;
+
+            
+            if (funcao == "e")
+            {
+                // Formata a função como C * Exp(k * x)
+                termoCalculo = operador + valorCoeficiente + " * Exp(" + expoenteCalculo + " * " + variavelCalc + ")";
+                // Construa a expressão 'kx' e passe como expoente
+                string expoenteComVariavel = $"{expoente}{variavel}"; // Exemplo: "k * x"
+                ConstroiFuncaoVisual(valorCoeficiente, operador, funcao, variavel, expoenteComVariavel);
+            }
+            else
+            {
+                if (funcao == "Ln")
+                {
+                    // Corrige para logaritmo natural (Log sem especificar a base)
+                    termoCalculo = operador + "Log(" + variavelCalc + "," + valorE + ")";
+                } else
+                {
+                    //Constroi o termo que será calculado pelo NCalc
+                    termoCalculo = operador + funcao + "(" + valorCoeficiente + " * Pow(" + variavelCalc + ", " + expoenteCalculo + "))";
+                }
+
+                //Constrói a versão visual da integral
+                ConstroiFuncaoVisual(valorCoeficiente, operador, funcao, variavel, expoente);
+            }
 
             //Adiciona na lista de termos
             termosCalculo.Add(termoCalculo);
-
-            //Constrói a versão visual da integral
-            ConstroiFuncaoVisual(valorCoeficiente, operador, funcao, variavel, expoente);
 
             //Limpa os campos após a inserção
             LimparCampos();
@@ -88,7 +109,6 @@ namespace projeto_pbl
         private void btnCalcular_Click(object sender, EventArgs e)
         {
             // Captura os valores dos limites e subintervalos
-
             if (!double.TryParse(txtLimiteA.Text, out double a))
             {
                 MessageBox.Show("Limite inferior inválido!");
@@ -110,10 +130,8 @@ namespace projeto_pbl
             // Constrói a função a partir da expressão do usuário
             Func<double, double> func = ConstruirFuncaoUsuario();
 
-
             // Calcula a integral usando a regra dos trapézios
             double resultado = RegraDosTrapeziosRepetidos(func, a, b, n);
-            //lblResultado.Text = " " + resultado.ToString();
 
             // Gera o gráfico da função e dos trapezoides
             MostrarGrafico(func, a, b, n);
@@ -145,6 +163,7 @@ namespace projeto_pbl
                 expressao.Parameters["x"] = x; // Define x como o valor a ser substituído na expressão
                 return Convert.ToDouble(expressao.Evaluate());
             };
+
         }
 
         private void MostrarGrafico(Func<double, double> func, double a, double b, int n)
@@ -153,6 +172,7 @@ namespace projeto_pbl
 
             // Série da função original baseada na expressão do usuário
             var funcaoSerie = new LineSeries { Title = "Função", Color = OxyColors.Red };
+            
             for (double x = a; x <= b; x += 0.1)
             {
                 funcaoSerie.Points.Add(new DataPoint(x, func(x)));
@@ -192,19 +212,37 @@ namespace projeto_pbl
             // Converte o expoente para superíndice, se aplicável
             string expoenteSuperindice = (expoente == "1" || string.IsNullOrEmpty(expoente)) ? "" : ConverterParaSuperindice(expoente);
 
-            // Monta o termo: se o coeficiente é 1, ele não aparece visualmente
+            // Trata o caso específico da função exponencial
             string termo;
-            if (coeficiente == "1")
+            
+            if (funcao == "e")
             {
-                termo = string.IsNullOrEmpty(funcao)
-                    ? $"{variavel}{expoenteSuperindice}"      // Sem função, sem parênteses
-                    : $"{funcao}({variavel}{expoenteSuperindice})"; // Com função, variável entre parênteses
+                // Exponencial: exp(x) ou coeficiente * exp(x)
+                termo = (coeficiente == "1")
+                    ? $"e{expoenteSuperindice}" // Sem coeficiente explícito
+                    : $"{coeficiente}e{expoenteSuperindice}"; // Com coeficiente
             }
             else
             {
-                termo = string.IsNullOrEmpty(funcao)
-                    ? $"{coeficiente}{variavel}{expoenteSuperindice}" // Sem função
-                    : $"{coeficiente}{funcao}({variavel}{expoenteSuperindice})"; // Com função
+                // Monta o termo para outras funções
+                if (coeficiente == "1")
+                {
+                    if (string.IsNullOrEmpty(variavel))
+                    {
+                        termo = coeficiente;
+                    } else
+                    {
+                        termo = string.IsNullOrEmpty(funcao)
+                            ? $"{variavel}{expoenteSuperindice}" // Sem função, sem parênteses
+                            : $"{funcao}({variavel}{expoenteSuperindice})"; // Com função
+                    }
+                }
+                else
+                {
+                    termo = string.IsNullOrEmpty(funcao)
+                        ? $"{coeficiente}{variavel}{expoenteSuperindice}" // Sem função
+                        : $"{funcao}({coeficiente}{variavel}{expoenteSuperindice})"; // Com função
+                }
             }
 
             // Adiciona o operador antes do termo, se não for o primeiro
@@ -264,29 +302,36 @@ namespace projeto_pbl
 
         private string ConverterParaSuperindice(string expoente)
         {
-            // Dicionário para mapear números para superíndice
+            // Dicionário para mapear números e caracteres para superíndice
             var superindiceMap = new Dictionary<char, char>
             {
                 {'0', '⁰'}, {'1', '¹'}, {'2', '²'}, {'3', '³'}, {'4', '⁴'},
-                {'5', '⁵'}, {'6', '⁶'}, {'7', '⁷'}, {'8', '⁸'}, {'9', '⁹'}
+                {'5', '⁵'}, {'6', '⁶'}, {'7', '⁷'}, {'8', '⁸'}, {'9', '⁹'},
+                {'.', '·'}, // Representação para o ponto decimal
+                {'x', 'ˣ'}  // Representação para x
             };
 
             string resultado = "";
             foreach (char c in expoente)
             {
-                // Converte cada dígito para seu equivalente em superíndice
+                // Converte cada caractere para seu equivalente em superíndice
                 if (superindiceMap.ContainsKey(c))
                 {
                     resultado += superindiceMap[c];
                 }
                 else
                 {
-                    MessageBox.Show("Expoente inválido! Utilize apenas números.");
+                    // Exibe uma mensagem de erro para caracteres inválidos
+                    MessageBox.Show($"Caractere inválido no expoente: '{c}'. Utilize apenas números, ponto decimal ou 'x'.",
+                                    "Erro de Formatação",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
                     return "";
                 }
             }
             return resultado;
         }
+
 
         private void comboOperador_TextChanged(object sender, EventArgs e)
         {
