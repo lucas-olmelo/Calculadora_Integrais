@@ -68,7 +68,6 @@ namespace projeto_pbl
             
             string termoCalculo;
 
-            
             if (funcao == "e")
             {
                 // Formata a função como C * Exp(k * x)
@@ -141,12 +140,24 @@ namespace projeto_pbl
         {
             double h = (b - a) / n;
             double soma = 0.5 * (func(a) + func(b));
+            double[] valores = new double[n+1];
 
-            for (int i = 1; i < n; i++)
+            // Preencher o vetor com os valores de x e calcular a soma
+            for (int i = 0; i <= n; i++) // Alterado para incluir x0 e xn
             {
                 double x = a + i * h;
-                soma += func(x);
+                valores[i] = func(x);
+
+                // Adicionar o valor de f(x) para os pontos intermediários
+                if (i != 0 && i != n)
+                {
+                    soma += func(x);
+                }
             }
+
+            // Mostrar os valores de x no vetor
+            string valoresFuncao = string.Join("; ", valores);
+            MessageBox.Show($"Valores de x: {valoresFuncao}");
 
             return soma * h;
         }
@@ -172,7 +183,7 @@ namespace projeto_pbl
 
             // Série da função original baseada na expressão do usuário
             var funcaoSerie = new LineSeries { Title = "Função", Color = OxyColors.Red };
-            
+
             for (double x = a; x <= b; x += 0.1)
             {
                 funcaoSerie.Points.Add(new DataPoint(x, func(x)));
